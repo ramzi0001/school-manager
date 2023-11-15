@@ -81,4 +81,3 @@ After seeding. Login details as follows:
 - View own child's payments
 - View noticeboard and school events in calendar
 - Manage own profile
-
