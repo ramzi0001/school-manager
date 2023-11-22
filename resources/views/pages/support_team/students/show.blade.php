@@ -16,8 +16,11 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-highlight">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active">{{ $sr->user->name }}</a>
+                        <a href="#basic-info" class="nav-link active" data-toggle="tab">{{ $sr->user->name }}</a>
                     </li>
+                    <li class="nav-item">
+                    <a href="#absences" class="nav-link" data-toggle="tab">Absences</a>
+                </li>
                 </ul>
 
                 <div class="tab-content">
@@ -108,6 +111,19 @@
                         </table>
                     </div>
 
+                    {{--Absences Info--}}
+                    <div class="tab-pane fade" id="absences">
+                        <table class="table table-bordered">
+                            <tbody>
+                                @foreach($absences as $abs)
+                                    <tr>
+                                        <td class="font-weight-bold">{{ $abs->subject->name }}</td>
+                                        <td>{{ $abs->wd_date }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

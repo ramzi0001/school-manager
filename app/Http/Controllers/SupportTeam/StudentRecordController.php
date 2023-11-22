@@ -133,7 +133,9 @@ class StudentRecordController extends Controller
         if(!$sr_id){return Qs::goWithDanger();}
 
         $data['sr'] = $this->student->getRecord(['id' => $sr_id])->first();
-
+        $array_ = StudentAbsence::where(['student_id'=> $data['sr']->user_id, 'session' => Qs::getSetting('current_session')])->get();
+        $ids = array_column($array_->toArray(),'section_abs');
+        $data['absences'] = SectionAbs::whereIn('id', $ids)->get();
         /* Prevent Other Students/Parents from viewing Profile of others */
         if(Auth::user()->id != $data['sr']->user_id && !Qs::userIsTeamSAT() && !Qs::userIsMyChild($data['sr']->user_id, Auth::user()->id)){
             return redirect(route('dashboard'))->with('pop_error', __('msg.denied'));
