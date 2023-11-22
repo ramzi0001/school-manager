@@ -70,7 +70,7 @@
                                                         <form method="post" id="item-abs-{{ Qs::hash($s->user->id) }}" action="{{ route('students.absent', ['st_id' => Qs::hash($s->user->id), 'sb_id' =>$subject->id])}}" class="hidden">
                                                             @csrf @method('post')
                                                             <input type="hidden" name="my_class_id" value="{{ $my_class->id }}"/>
-                                                            <input type="hidden" name="section_id" value="{{ $s->id }}"/>
+                                                            <input type="hidden" name="section_id" value="{{ $s->section->id }}"/>
                                                         </form>
                                                     @endif
                                                     <a href="{{ route('students.edit', Qs::hash($s->id)) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>
@@ -129,7 +129,7 @@
                                                             <form method="post" id="item-abs-{{ Qs::hash($sr->user->id) }}" action="{{ route('students.absent', ['st_id' => Qs::hash($sr->user->id), 'sb_id' =>$subject->id])}}" class="hidden">
                                                                 @csrf @method('post')
                                                                 <input type="hidden" name="my_class_id" value="{{ $my_class->id }}"/>
-                                                                <input type="hidden" name="section_id" value="{{ $sr->id }}"/>
+                                                                <input type="hidden" name="section_id" value="{{ $sr->section->id }}"/>
                                                             </form>
                                                         @endif
                                                         <a href="{{ route('students.edit', Qs::hash($sr->id)) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit</a>
@@ -170,7 +170,7 @@
                         @foreach($absences as $abs)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $my_class->name.' '.$abs->section->name }}</td>
+                                <td>{{ $abs->my_class->name.' '.$abs->section->name }}</td>
                                 <td>{{ $abs->subject->name }}</td>
                                 <td>{{ $abs->wd_date }}</td>
                                 <td class="text-center">

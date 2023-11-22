@@ -241,10 +241,6 @@ class StudentRecordController extends Controller
         if(!$student_abs){
             StudentAbsence::insert($data_st);
         }
-        // $sr = $this->student->getRecord(['user_id' => $st_id])->first();
-        // $path = Qs::getUploadPath('student').$sr->user->code;
-        // Storage::exists($path) ? Storage::deleteDirectory($path) : false;
-        // $this->user->delete($sr->user->id);
 
         return back()->with('flash_success', __('msg.update_ok'));
     }
