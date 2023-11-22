@@ -137,6 +137,34 @@
         });
     }
 
+    function confirmAbsence(id,name,sb_id) {
+        swal({
+            title: "Are you sure?",
+            text: `ths student ${name} is absent from the ${sb_id} class`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then(function(willConf){
+            if (willConf) {
+             $('form#item-'+id).submit();
+            }
+        });
+    }
+
+    function confirmDeleteAbs(id) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this item!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then(function(willDelete){
+            if (willDelete) {
+             $('form#item-deleteabs-'+id).submit();
+            }
+        });
+    }
+
     function confirmReset(id) {
         swal({
             title: "Are you sure?",

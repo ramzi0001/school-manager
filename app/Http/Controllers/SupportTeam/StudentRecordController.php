@@ -6,6 +6,8 @@ use App\Helpers\Qs;
 use App\Helpers\Mk;
 use App\Http\Requests\Student\StudentRecordCreate;
 use App\Http\Requests\Student\StudentRecordUpdate;
+use App\Models\SectionAbs;
+use App\Models\StudentAbsence;
 use App\Repositories\LocationRepo;
 use App\Repositories\MyClassRepo;
 use App\Repositories\StudentRepo;
@@ -13,6 +15,7 @@ use App\Repositories\UserRepo;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -84,11 +87,24 @@ class StudentRecordController extends Controller
         return Qs::jsonStoreOk();
     }
 
-    public function listByClass($class_id)
+    public function listByClass($class_id,$sb_id)
     {
         $data['my_class'] = $mc = $this->my_class->getMC(['id' => $class_id])->first();
         $data['students'] = $this->student->findStudentsByClass($class_id);
         $data['sections'] = $this->my_class->getClassSections($class_id);
+        $data['subjects'] = $this->my_class->findSubjectByClass($class_id);
+        $data['subject'] = isset($data['subjects'][0])?$data['subjects'][0]:NULL;
+
+        if($sb_id != 0){
+            $data['subject'] = $this->my_class->findSubject(['id' => $sb_id])->first();
+        }
+
+        $array_ = SectionAbs::where([ 'my_class_id' => $class_id, 'subject_id' => $sb_id, 'session' =>  Qs::getSetting('current_session')])->get();
+
+        $data['absences'] = $array_ ;
+        $ids = array_column($array_->toArray(),'id');
+        $data['student_absences'] = StudentAbsence::whereIn('section_abs',$ids)->get();
+
 
         return is_null($mc) ? Qs::goWithDanger() : view('pages.support_team.students.list', $data);
     }
@@ -180,6 +196,57 @@ class StudentRecordController extends Controller
         $this->user->delete($sr->user->id);
 
         return back()->with('flash_success', __('msg.del_ok'));
+    }
+
+    public function destroy_section_abs($se_id)
+    {
+        if(!$se_id){return Qs::goWithDanger();}
+
+        SectionAbs::destroy($se_id);
+
+        return back()->with('flash_success', __('msg.del_ok'));
+    }
+
+    public function destroyStAbs($se_id)
+    {
+        if(!$se_id){return Qs::goWithDanger();}
+
+        StudentAbsence::destroy($se_id);
+
+        return back()->with('flash_success', __('msg.del_ok'));
+    }
+
+
+    public function absent($st_id, $sb_id, Request $request)
+    {
+        $st_id = Qs::decodeHash($st_id);
+        if(!$st_id || $sb_id == 0){return Qs::goWithDanger();}
+        $currentDate = date('Y-m-d');
+        $currentDate = date('Y-m-d', strtotime($currentDate));
+        $data = [
+            'my_class_id' => $request->my_class_id, 'section_id' => $request->section_id, 'subject_id' => $sb_id,
+            'wd_date' => $currentDate, 'session' => Qs::getSetting('current_session')
+        ];
+
+        $section_abs = SectionAbs::where($data)->first();
+
+        if(!isset($section_abs)){
+            $section_abs = SectionAbs::create($data);
+        }
+
+        $data_st = ['section_abs' => $section_abs->id, 'student_id' => $st_id, 'session' => Qs::getSetting('current_session')];
+
+        $student_abs = StudentAbsence::where($data_st)->first();
+
+        if(!$student_abs){
+            StudentAbsence::insert($data_st);
+        }
+        // $sr = $this->student->getRecord(['user_id' => $st_id])->first();
+        // $path = Qs::getUploadPath('student').$sr->user->code;
+        // Storage::exists($path) ? Storage::deleteDirectory($path) : false;
+        // $this->user->delete($sr->user->id);
+
+        return back()->with('flash_success', __('msg.update_ok'));
     }
 
 }

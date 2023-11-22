@@ -92,7 +92,7 @@
 
                 {{--Manage Students--}}
                 @if(Qs::userIsTeamSAT())
-                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.create', 'students.list', 'students.edit', 'students.show', 'students.promotion', 'students.promotion_manage', 'students.graduated']) ? 'nav-item-expanded nav-item-open' : '' }} ">
+                    <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.create', 'students.list', 'students.edit', 'students.show', 'students.absent', 'students.promotion', 'students.promotion_manage', 'students.graduated']) ? 'nav-item-expanded nav-item-open' : '' }} ">
                         <a href="#" class="nav-link"><i class="icon-users"></i> <span> Students</span></a>
 
                         <ul class="nav nav-group-sub" data-submenu-title="Manage Students">
@@ -105,11 +105,11 @@
                             @endif
 
                             {{--Student Information--}}
-                            <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show']) ? 'nav-item-expanded' : '' }}">
-                                <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show']) ? 'active' : '' }}">Student Information</a>
+                            <li class="nav-item nav-item-submenu {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show', 'students.absent']) ? 'nav-item-expanded' : '' }}">
+                                <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['students.list', 'students.edit', 'students.show', 'students.absent']) ? 'active' : '' }}">Student Information</a>
                                 <ul class="nav nav-group-sub">
                                     @foreach(App\Models\MyClass::orderBy('name')->get() as $c)
-                                        <li class="nav-item"><a href="{{ route('students.list', $c->id) }}" class="nav-link ">{{ $c->name }}</a></li>
+                                        <li class="nav-item"><a href="{{ route('students.list', ['class_id'=>$c->id, 'sb_id'=>0]) }}" class="nav-link ">{{ $c->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>

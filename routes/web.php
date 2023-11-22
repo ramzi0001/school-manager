@@ -24,10 +24,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         /*************** Students *****************/
         Route::group(['prefix' => 'students'], function(){
+            Route::post('absent/{st_id}/{sb_id}', 'StudentRecordController@absent')->name('students.absent');
+            Route::delete('destroy_section_abs/{se_id}', 'StudentRecordController@destroy_section_abs')->name('students.destroy_section_abs');
+            Route::delete('destroyStAbs/{se_id}', 'StudentRecordController@destroyStAbs')->name('students.destroyStAbs');
+
+
             Route::get('reset_pass/{st_id}', 'StudentRecordController@reset_pass')->name('st.reset_pass');
             Route::get('graduated', 'StudentRecordController@graduated')->name('students.graduated');
             Route::put('not_graduated/{id}', 'StudentRecordController@not_graduated')->name('st.not_graduated');
-            Route::get('list/{class_id}', 'StudentRecordController@listByClass')->name('students.list')->middleware('teamSAT');
+            Route::get('list/{class_id}/{sb_id}', 'StudentRecordController@listByClass')->name('students.list')->middleware('teamSAT');
 
             /* Promotions */
             Route::post('promote_selector', 'PromotionController@selector')->name('students.promote_selector');
