@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label for="nal_id">Nationality: <span class="text-danger">*</span></label>
                                 <select data-placeholder="Choose..." required name="nal_id" id="nal_id" class="select-search form-control">
@@ -102,7 +102,7 @@
                                     <option selected value="{{ $sr->user->lga_id }}">{{ $sr->user->lga->name}}</option>
                                 @endif
                             </select>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="row">
@@ -120,7 +120,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="d-block">Upload Passport Photo:</label>
+                                <label class="d-block">Upload Photo:</label>
                                 <input value="{{ old('photo') }}" accept="image/*" type="file" name="photo" class="form-input-styled" data-fouc>
                                 <span class="form-text text-muted">Accepted Images: jpeg, png. Max file size 2Mb</span>
                             </div>
