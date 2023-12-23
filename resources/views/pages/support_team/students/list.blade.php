@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title', 'Student Information - '.$my_class->name.' '.$subject->name)
+@section('page_title', $subject?'Student Information - '.$my_class->name.' '.$subject->name:'Student Information - '.$my_class->name)
 @section('content')
 
     <div class="card">
