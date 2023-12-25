@@ -42,7 +42,9 @@
         }
     #goog-gt-tt, .goog-te-balloon-frame{display: none !important;}
     .goog-text-highlight { background: none !important; box-shadow: none !important;}
-
+    .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+        background: none !important; box-shadow: none !important;
+    }
     .VIpgJd-ZVi9od-l4eHX-hSRGPd {
         display: none !important;
         }
