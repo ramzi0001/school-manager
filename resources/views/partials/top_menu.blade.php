@@ -1,3 +1,62 @@
+
+<style>
+
+    #google_translate_element select{
+    background: transparent ;
+    color:#000;
+    border: none;
+    border-radius:3px;
+    padding:6px 8px
+    }
+
+    #goog-gt-tt, .goog-te-balloon-frame{display: none !important;}
+    .goog-text-highlight { background: none !important; box-shadow: none !important;}
+    #google_translate_element select{
+    background-color:transparent;
+    color:#fff;
+    border: none;
+    border-radius:3px;
+    padding:6px 8px
+    }
+    #google_translate_element select option{
+    color:#000;
+    }
+    .goog-logo-link{
+        display:none !important;
+    }
+    .goog-te-gadget{
+    color:transparent!important;
+
+    }
+
+    .goog-te-banner-frame{
+    display:none !important;
+
+
+    }
+    .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+        }
+    body {
+        top: 0px !important;
+        }
+    #goog-gt-tt, .goog-te-balloon-frame{display: none !important;}
+    .goog-text-highlight { background: none !important; box-shadow: none !important;}
+
+    .VIpgJd-ZVi9od-l4eHX-hSRGPd {
+        display: none !important;
+        }
+    .VIpgJd-ZVi9od-ORHb-OEVmcd {
+        display: none !important;
+    }
+    .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+        display: none !important;
+    }
+    .VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc {
+        display: none !important;
+    }
+
+</style>
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="mt-2 mr-5">
         <a href="{{ route('dashboard') }}" class="d-inline-block">
@@ -26,8 +85,9 @@
                     <i class="icon-paragraph-justify3"></i>
                 </a>
             </li>
-
-
+            <li class="nav-item">
+                <div id="google_translate_element" class="sidebar-control" style="margin-top: 5px;"></div>
+            </li>
         </ul>
 
 			<span class="navbar-text ml-md-3 mr-md-auto"></span>
@@ -54,3 +114,22 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en',
+                includedLanguages:'ar,en,fr',},
+
+                'google_translate_element'
+            );
+            var $googleDiv = $("#google_translate_element .skiptranslate");
+            var $googleDivChild = $("#google_translate_element .skiptranslate div");
+            $googleDivChild.next().remove();
+
+            $googleDiv.contents().filter(function(){
+                return this.nodeType === 3 && $.trim(this.nodeValue) !== '';
+            }).remove();
+        }
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
